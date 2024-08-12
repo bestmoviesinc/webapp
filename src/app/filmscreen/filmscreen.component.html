@@ -1,0 +1,34 @@
+<div *ngIf="movie" class="movie-details">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}">
+    <div class="movie-info">
+      <h1>{{ movie.title }}</h1>
+      <p>Release Date: {{ movie.release_date }}</p>
+      <p>{{ movie.overview }}</p>
+      <button (click)="addMovieToFavorites()" class="favorite-button">Add to Favorites</button>
+      <!-- Add more movie details as needed -->
+    </div>
+  </div>
+  
+  <div *ngIf="!movie" class="loading">
+    <p>Loading movie details...</p>
+  </div>
+  
+  <div  *ngIf="userIsLoggedIn">
+    <h3>Comments</h3>
+    <div class="comments-list">
+        <div *ngFor="let comment of commentsWithUserDetails">
+          <strong>{{ comment.username }}:</strong>
+          <p>{{ comment.comment }}</p>
+        </div>
+      </div>
+    
+    <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="comment-form">
+        <textarea formControlName="text" placeholder="Your Comment" required></textarea>
+        <button type="submit">Add Comment</button>
+      </form>
+    </div>
+
+    
+  <div *ngIf="!userIsLoggedIn">
+    <p>You must be logged in to see and post comments.</p>
+  </div>

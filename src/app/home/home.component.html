@@ -1,0 +1,14 @@
+<div class="carousel-container">
+    <div class="carousel-content">
+      <mat-card *ngFor="let item of nowPlayingMovies" class="carousel-card" (click)="onCardClick(item.id)">
+        <img mat-card-image  [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path" [alt]="item.title">
+        <div class="carousel-overlay">
+          <div class="carousel-text">
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.overview }}</p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  

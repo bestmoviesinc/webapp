@@ -1,0 +1,11 @@
+<div class="movie-list">
+    <h1>Results for: {{ queryType }}</h1>
+    <div class="cards-container">
+      <mat-card *ngFor="let movie of movies" class="movie-card" (click)="navigateToFilmScreen(movie.id)">
+        <mat-card-title>{{ movie.title }}</mat-card-title>
+        <mat-card-content>
+          <p>{{ movie.release_date }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

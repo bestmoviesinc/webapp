@@ -1,0 +1,25 @@
+<mat-toolbar class="header">
+    <div class="headerLeft">
+        <a routerLink="/home"> 
+            <img className="icon" src="https://cdn-icons-png.flaticon.com/512/2798/2798007.png" 
+                width="50"
+                height="50"/>
+            </a>
+        <a routerLink="/movielist" (click)="search('upcoming')"><span>Upcoming</span></a>
+        <a routerLink="/movielist" (click)="search('popular')"><span>Popular</span></a>
+    <div class="search-container">
+        <input type="text" placeholder="Search" class="search-bar" #searchInput>
+        <button class="search-button" (click)="search('search:'+searchInput.value)" routerLink="/movielist">Search</button>
+      </div>
+    </div>
+    <div class="headerRight">
+      
+       <a routerLink="/user"><img className="icon" src="https://static-00.iconduck.com/assets.00/user-icon-256x256-1n54kpt1.png" 
+        width="50"
+        height="50"
+        /></a>
+
+    
+    </div>
+  </mat-toolbar>
+  

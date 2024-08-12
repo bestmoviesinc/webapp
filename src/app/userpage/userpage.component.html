@@ -1,0 +1,82 @@
+<div class="auth-container">
+    <h2 *ngIf="isSignInMode">Sign In</h2>
+    <h2 *ngIf="isSignUpMode">Sign Up</h2>
+    <h2 *ngIf="isUserDetailsMode">User Details</h2>
+  
+    <form *ngIf="isSignInMode" (ngSubmit)="onSignInSubmit()" [formGroup]="signinForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit">Sign In</button>
+      <p *ngIf="signinError" class="error-message">Invalid username or password.</p>
+    </form>
+  
+    <form *ngIf="isSignUpMode" (ngSubmit)="onSignUpSubmit()" [formGroup]="signupForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required>
+      </mat-form-field>
+  
+      <!-- Optional fields -->
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="first_name">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="last_name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Age</mat-label>
+        <input matInput formControlName="age">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Profession</mat-label>
+        <input matInput formControlName="profession">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Sign Up</button>
+      <p *ngIf="signupError" class="error-message">Registration failed. Please try again.</p>
+    </form>
+  
+    <div *ngIf="isUserDetailsMode">
+      <p><strong>Username:</strong> {{ user?.username }}</p>
+      <p><strong>Password:</strong> {{ user?.password }}</p>
+      <p><strong>First Name:</strong> {{ user?.first_name }}</p>
+      <p><strong>Last Name:</strong> {{ user?.last_name }}</p>
+      <p><strong>Age:</strong> {{ user?.age }}</p>
+      <p><strong>Profession:</strong> {{ user?.profession }}</p>
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    
+    <!-- Display favorite movies -->
+    <h3>Your Favorite Movies</h3>
+    <div class="favorite-movies">
+      <mat-card *ngFor="let movie of favoriteMovies" class="movie-card" (click)="onCardClick(movie.id)">
+        <mat-card-header>
+          <mat-card-title>{{ movie.title }}</mat-card-title>
+        </mat-card-header>
+        
+      </mat-card>
+    </div>
+    
+    </div>
+  
+    <p *ngIf="!isUserDetailsMode">
+      <a (click)="toggleAuthMode()">
+        {{ isSignInMode ? 'Don\'t have an account? Sign Up' : 'Already have an account? Sign In' }}
+      </a>
+    </p>
+  </div>
+  

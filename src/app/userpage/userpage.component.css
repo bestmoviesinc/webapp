@@ -1,0 +1,45 @@
+.auth-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color:coral;
+  }
+
+  .favorite-movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adds a 16px gap between cards */
+    justify-content: center; /* Center the cards in the container */
+  
+  }
+
+  .movie-card{
+    background-color: black;
+    border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: auto;
+    padding: 16px;
+    
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  a {
+    cursor: pointer;
+    color: #1976d2;
+    text-decoration: underline;
+  }
+  

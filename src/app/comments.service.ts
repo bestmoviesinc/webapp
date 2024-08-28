@@ -18,7 +18,7 @@ export interface Comment {
 })
 export class CommentsService {
 
-  private commentsUrl = 'http://localhost:8080/comments'; // Example backend URL
+  private commentsUrl = 'http://bestapi.eba-gggbd6bt.eu-north-1.elasticbeanstalk.com/comments'; // Example backend URL
 
   constructor(private http: HttpClient) {}
 

@@ -32,12 +32,12 @@
       <!-- Optional fields -->
       <mat-form-field appearance="fill">
         <mat-label>First Name</mat-label>
-        <input matInput formControlName="first_name">
+        <input matInput formControlName="firstName">
       </mat-form-field>
   
       <mat-form-field appearance="fill">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="last_name">
+        <input matInput formControlName="lastName">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Age</mat-label>
@@ -54,11 +54,12 @@
     <div *ngIf="isUserDetailsMode">
       <p><strong>Username:</strong> {{ user?.username }}</p>
       <p><strong>Password:</strong> {{ user?.password }}</p>
-      <p><strong>First Name:</strong> {{ user?.first_name }}</p>
-      <p><strong>Last Name:</strong> {{ user?.last_name }}</p>
+      <p><strong>First Name:</strong> {{ user?.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ user?.lastName }}</p>
       <p><strong>Age:</strong> {{ user?.age }}</p>
       <p><strong>Profession:</strong> {{ user?.profession }}</p>
       <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+      <button mat-raised-button color="warn" (click)="editInfo()">Edit info</button>
     
     <!-- Display favorite movies -->
     <h3>Your Favorite Movies</h3>
@@ -72,6 +73,40 @@
     </div>
     
     </div>
+
+     <!-- Edit User Info Form -->
+     <form *ngIf="isEditMode" (ngSubmit)="onEditSubmit()" [formGroup]="editForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" >
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" >
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Age</mat-label>
+        <input matInput formControlName="age">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Profession</mat-label>
+        <input matInput formControlName="profession">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Save Changes</button>
+      <button mat-raised-button color="warn" type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+  
   
     <p *ngIf="!isUserDetailsMode">
       <a (click)="toggleAuthMode()">

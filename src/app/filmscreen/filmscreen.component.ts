@@ -28,7 +28,7 @@ export class FilmscreenComponent implements OnInit {
   commentsWithUserDetails: CommentWithUser[] = [];
   
 
-  userIsLoggedIn: boolean = false;
+  userIsLoggedIn: boolean= false;
   movie: Movie | undefined;
   user: any = {};
   comments: Comment[] = [];
@@ -52,6 +52,8 @@ export class FilmscreenComponent implements OnInit {
       
     }
     this.userIsLoggedIn = this.userService.isUserLoggedIn();
+    console.log(this.userService.isUserLoggedIn().valueOf());
+    
   }
 
   loadMovieDetails(movieId: number): void {
@@ -131,8 +133,10 @@ export class FilmscreenComponent implements OnInit {
     if (storedUser) {
       this.user = storedUser;
       console.log('Current user loaded:', this.user);
+      this.userIsLoggedIn = true;
     } else {
       console.log('No user is currently logged in.');
+      this.userIsLoggedIn = false;
     }
   }
 

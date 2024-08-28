@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoriteMoviesService {
 
-  private apiUrl = 'http://localhost:8080/users';
+  private apiUrl = 'http://bestapi.eba-gggbd6bt.eu-north-1.elasticbeanstalk.com/users';
 
   constructor(private http: HttpClient) { }
 

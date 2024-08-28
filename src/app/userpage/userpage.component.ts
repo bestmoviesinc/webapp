@@ -27,9 +27,11 @@ import { Router } from '@angular/router';
 export class UserpageComponent {
   isSignInMode = true;  // Toggle between Sign In and Sign Up
   isSignUpMode = false; // Controls if we're in Sign Up mode
+  isEditMode = false; 
   isUserDetailsMode = false; // Controls if we're in User Details mode
   signinForm: FormGroup;
   signupForm: FormGroup;
+  editForm: FormGroup;
   signinError: boolean = false;
   signupError: boolean = false;
   user: any = null;
@@ -50,9 +52,21 @@ export class UserpageComponent {
     this.signupForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-      email: [''],
-      fullName: ['']
+      firstName: [''],
+      lastName: [''],
+      age:[''],
+      profession:['']
     });
+
+    this.editForm = this.fb.group({
+      username: [{ value: '', disabled: true }],
+      password: [{ value: '', disabled: true }],
+      firstName: [''],
+      lastName: [''],
+      age: [''],
+      profession: ['']
+    });
+  
 
     this.user = this.userService.getLoggedInUser();
     if (this.user) {
@@ -74,6 +88,20 @@ export class UserpageComponent {
     this.signupError = false;
 
   }
+
+  editInfo(): void {
+    this.isEditMode = true;
+    this.isUserDetailsMode = false;
+    this.editForm.patchValue({
+      username: this.user.username,
+      password: this.user.password,
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      age: this.user.age,
+      profession: this.user.profession
+    });
+  }
+
 // Handle Sign In form submission
 onSignInSubmit(): void {
   const credentials = this.signinForm.value;
@@ -96,7 +124,29 @@ onSignInSubmit(): void {
     }
   });
 }
+onEditSubmit(): void {
+  if(this.editForm.valid) {
+    const updatedUser = {
+      ...this.user,
+      ...this.editForm.getRawValue()
+    };
+    this.userService.updateUser(updatedUser.id,updatedUser).subscribe({
+      next: (response) => {
+        this.user = response;
+        this.isEditMode = false;
+        this.isUserDetailsMode = true;
+      },
+      error: (error) => {
+        console.error('Failed to update user',error);
+      }
+    });
+  }
+}
 
+cancelEdit(): void {
+  this.isEditMode = false;
+  this.isUserDetailsMode = true;
+}
 // Handle Sign Up form submission
 onSignUpSubmit(): void {
   const newUser = this.signupForm.value;
@@ -132,12 +182,12 @@ private loadFavoriteMovies(): void {
 
     this.favService.getFavoriteMovies(this.user.id).subscribe({
       next: (favorites) => {  // 'favorites' is the array of objects with 'movieId'
-        console.log('Favorite movies data:', favorites);
+        
 
         if (favorites && favorites.length > 0) {
           // Extract movieId from each object
           const movieDetailsObservables = favorites.map(favorite => {
-            console.log('Processing favorite:', favorite);
+            
             const movieId = favorite.movieId;  // Extract the movieId
             return this.movieService.getMoviebyId(movieId);
           });
@@ -145,7 +195,7 @@ private loadFavoriteMovies(): void {
           // Fetch all movie details
           forkJoin(movieDetailsObservables).subscribe({
             next: (movies) => {
-              console.log('Fetched movie details:', movies);
+              
               this.favoriteMovies = movies;
             },
             error: (error: any) => {

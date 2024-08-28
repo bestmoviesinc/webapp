@@ -69,4 +69,4 @@ COPY --from=build /usr/src/app// .//
 EXPOSE 4200
 
 # Run the application.
-CMD npm start
+CMD ng serve

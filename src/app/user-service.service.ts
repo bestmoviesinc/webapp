@@ -20,7 +20,7 @@ export interface User {
 })
 export class UserServiceService {
 
-  private apiUrl = 'http://localhost:8080/users'; // Base URL for the Spring Boot API
+  private apiUrl = 'http://bestapi.eba-gggbd6bt.eu-north-1.elasticbeanstalk.com/users'; // Base URL for the Spring Boot API
 
   constructor(private http: HttpClient) { }
 
@@ -53,7 +53,8 @@ export class UserServiceService {
   }
 
   isUserLoggedIn(): boolean {
-    return this.getLoggedInUser !== null;
+    
+    return this.getLoggedInUser() !== null;
   }
 
   // Get user by ID (for viewing profiles)

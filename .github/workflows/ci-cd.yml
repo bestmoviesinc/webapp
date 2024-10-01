@@ -15,10 +15,8 @@ jobs:
       - uses: actions/setup-node@v4.0.4
         with: 
           node-version: 18.18.0
-
       - name: Build Project
         run: npm run build:ssr
-
       - name: turn into zip
         run: zip -r your-app.zip .  
       - name: Deploy to EB

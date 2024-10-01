@@ -9,23 +9,36 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the source code from the repository
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name: Setup Node
-      - uses: actions/setup-node@v4.0.4
+
+      # Step 2: Set up Node.js environment (Node 18.18.0)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.4
         with: 
-          node-version: 18.18.0
+          node-version: '18.18.0'
+        
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Build the project for server-side rendering (SSR)
       - name: Build Project
         run: npm run build:ssr
-      - name: turn into zip
-        run: zip -r your-app.zip .  
-      - name: Deploy to EB
+
+      # Step 5: Create a deployment package (zip)
+      - name: Turn into zip
+        run: zip -r your-app.zip .
+
+      # Step 6: Deploy to AWS Elastic Beanstalk
+      - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: 'bestmoviesinc'
-          environment_name: 'bestmoviesinc-dev2'
+          application_name: 'bestmoviesinc'  # Update to your application name in Elastic Beanstalk
+          environment_name: 'bestmoviesinc-dev2'  # Update to your EB environment name
           version_label: ${{ github.sha }}
-          region: eu-north-1
+          region: 'eu-north-1'  # Update to your AWS region
           deployment_package: your-app.zip

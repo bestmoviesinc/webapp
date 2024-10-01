@@ -1,14 +1,10 @@
 {
   "name": "bestmoviesinc",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "build:ssr": "ng build --configuration=production",
     "serve:ssr:bestmoviesinc": "node dist/bestmoviesinc/server/server.mjs",
-    "lint": "ng lint"
+    "start": "npm run serve:ssr:bestmoviesinc"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +20,7 @@
     "@angular/platform-server": "^18.1.0",
     "@angular/router": "^18.1.0",
     "@angular/ssr": "^18.1.2",
+    "@fortawesome/fontawesome-free": "^6.6.0",
     "bootstrap": "^5.3.3",
     "express": "^4.19.2",
     "ngx-bootstrap": "^18.0.2",

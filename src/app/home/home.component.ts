@@ -26,7 +26,7 @@ export class HomeComponent {
     this.movieService.getNowPlayingMovies().subscribe({
       next:(movies) => {
         this.nowPlayingMovies = movies;
-        console.log('Now Playing Movies:', this.nowPlayingMovies);
+        
       },
       error:(error: any) => {
         console.error('Failed to load now playing movies', error);

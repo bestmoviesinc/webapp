@@ -2,8 +2,17 @@
     <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}">
     <div class="movie-info">
       <h1>{{ movie.title }}</h1>
+      <!-- Display stars instead of number rating -->
+    <div class="stars">
+      <ng-container *ngFor="let star of stars; let i = index">
+        <i *ngIf="i < fullStars" class="fas fa-star"></i>
+        <i *ngIf="i === fullStars && hasHalfStar" class="fas fa-star-half-alt"></i>
+        <i *ngIf="i >= fullStars && (!hasHalfStar || i > fullStars)" class="far fa-star"></i>
+      </ng-container>
+    </div>
       <p>Release Date: {{ movie.release_date }}</p>
       <p>{{ movie.overview }}</p>
+      
       <button (click)="addMovieToFavorites()" class="favorite-button">Add to Favorites</button>
       <!-- Add more movie details as needed -->
     </div>

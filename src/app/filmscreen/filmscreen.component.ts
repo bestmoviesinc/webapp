@@ -27,7 +27,9 @@ export interface CommentWithUser {
 export class FilmscreenComponent implements OnInit {
   commentsWithUserDetails: CommentWithUser[] = [];
   
-
+  fullStars: number = 0;
+  hasHalfStar: boolean = false;
+  stars: number[] = [1, 2, 3, 4, 5];  // A fixed array to represent the 5-star rating system
   userIsLoggedIn: boolean= false;
   movie: Movie | undefined;
   user: any = {};
@@ -52,7 +54,7 @@ export class FilmscreenComponent implements OnInit {
       
     }
     this.userIsLoggedIn = this.userService.isUserLoggedIn();
-    console.log(this.userService.isUserLoggedIn().valueOf());
+    
     
   }
 
@@ -60,7 +62,8 @@ export class FilmscreenComponent implements OnInit {
     this.movieService.getMoviebyId(movieId).subscribe({
       next:(movie) => {
         this.movie = movie;
-        console.log('Movie details:', this.movie); // Debugging
+        this.calculateStarRating(movie.vote_average);
+       
       },
       error:(error:any) => {
         console.error('Failed to load movie details', error);
@@ -68,13 +71,20 @@ export class FilmscreenComponent implements OnInit {
   });
   }
 
+  calculateStarRating(vote_average: number): void {
+    const starRating = vote_average / 2;
+    this.fullStars = Math.floor(starRating);
+    this.hasHalfStar = (starRating - this.fullStars) >= 0.5;
+
+  }
+
   private loadComments(movieId: number): void {
     if (this.user) {
-      console.log('Fetching comments for movie:', movieId);
+      
   
       this.commentsService.getCommentsForMovie(movieId).subscribe({
         next: (comments: CommentWithUser[]) => {
-          console.log('Fetched comments:', comments);
+          
   
           if (comments && comments.length > 0) {
             // Create an array of observables for fetching user details
@@ -90,7 +100,7 @@ export class FilmscreenComponent implements OnInit {
             // Use forkJoin to wait for all user details to be fetched
             forkJoin(userDetailsObservables).subscribe({
               next: (commentsWithUserDetails) => {
-                console.log('Comments with user details:', commentsWithUserDetails);
+                
                 this.commentsWithUserDetails = commentsWithUserDetails;  // Store enriched comments
               },
               error: (error: any) => {
@@ -112,7 +122,7 @@ export class FilmscreenComponent implements OnInit {
     if (this.movie && this.user) {
       const newComment: Comment = {
         movieId: this.movie.id,
-        userId: this.user.id, // This should be dynamically set to the current user's ID
+        userId: this.user.id,
         comment: this.commentForm.value.text
       };
 
